@@ -31,11 +31,9 @@ switch param.test
         param.tstep=param.tf/20;
         param.cfl=0.45;
         
-        rho=1+0.2*sin(pi*param.x);
-        u=1+0.*rho;
-        p=1+0.*rho;
-        P =[rho;u;p];
-        param.exact_sol=@(x,t) [1+0.2*sin(pi*(x-t));u;p];
+        param.exact_sol=@(x,t) [1+0.2*sin(pi*(x-t));1+0.*x;1+0.*x];
+        P=param.exact_sol(param.x,0);
+        
 end
 U=prim2conVec(P);
 end
