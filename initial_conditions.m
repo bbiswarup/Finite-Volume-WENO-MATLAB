@@ -19,8 +19,23 @@ switch param.test
         rhoR=0.125;
         uR=0;
         pR=0.1;
+        P =(param.x<=0.5).*[rhoL;uL;pL] + (param.x> 0.5).*[rhoR;uR;pR];
+    case 2
+        % smooth
+        param.xmin=0;
+        param.xmax=2;
+        gas_gamma=1.4;
+        param.dx=(param.xmax-param.xmin)/param.nx;
+        param.x=param.xmin+0.5*param.dx:param.dx:param.xmax-0.5*param.dx;
+        param.tf=2.0;
+        param.tstep=param.tf/20;
+        param.cfl=0.45;
+        
+        rho=1+0.2*sin(pi*param.x);
+        u=1+0.*rho;
+        p=1+0.*rho;
+        P =[rho;u;p];
+        param.exact_sol=@(x,t) [1+0.2*sin(pi*(x-t));u;p];
 end
-
-P =(param.x<=0.5).*[rhoL;uL;pL] + (param.x> 0.5).*[rhoR;uR;pR];
 U=prim2conVec(P);
 end
